@@ -1,14 +1,12 @@
-/** FNV-1a 64-bit (as hex) of salt+value. Synchronous, fast, good enough for equality matching. */
+import { hmacSha256, toHex } from './hmac';
+
+/**
+ * Keyed hash of a value: HMAC-SHA-256(salt, value), first 16 hex chars (64 bits).
+ * The salt is random per install and never leaves the device, so exported hashes can be
+ * compared with each other but not reversed or dictionary-attacked by a reader of the export.
+ */
 export function hashValue(value: string, salt: string): string {
-  let h1 = 0x811c9dc5 ^ 0;
-  let h2 = 0xcbf29ce4 ^ 0;
-  const s = salt + '\u0000' + value;
-  for (let i = 0; i < s.length; i++) {
-    const c = s.charCodeAt(i);
-    h1 = Math.imul(h1 ^ c, 0x01000193) >>> 0;
-    h2 = Math.imul(h2 ^ (c + 0x9e37), 0x01000193) >>> 0;
-  }
-  return (h1.toString(16).padStart(8, '0') + h2.toString(16).padStart(8, '0')).slice(0, 12);
+  return toHex(hmacSha256(salt, value)).slice(0, 16);
 }
 
 const MAX_URL = 400;
@@ -31,11 +29,19 @@ export function redactUrl(url: string, salt: string): string {
   // Path segments that look like identifiers are hashed too.
   const path = u.pathname
     .split('/')
-    .map((seg) => (looksLikeId(seg) ? '#' + hashValue(seg, salt) : seg))
+    .map((seg) => (looksLikeId(seg) || looksPersonal(seg) ? '#' + hashValue(seg, salt) : seg))
     .join('/');
   let out = `${u.protocol}//${u.host}${path}${parts.length ? '?' + parts.join('&') : ''}`;
   if (out.length > MAX_URL) out = out.slice(0, MAX_URL) + '…';
   return out;
+}
+
+/** Path segments that may carry personal data (emails, long tokens, encoded payloads). */
+export function looksPersonal(seg: string): boolean {
+  if (!seg) return false;
+  let d = seg;
+  try { d = decodeURIComponent(seg); } catch { /* keep raw */ }
+  return d.includes('@') || d.length > 32 || /[=+]{1,2}$/.test(d) && d.length > 12;
 }
 
 /** Heuristic: long, mixed alphanumeric tokens are probably identifiers. */

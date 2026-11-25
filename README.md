@@ -94,12 +94,12 @@ node tests/e2e/real-sites.mjs                                                  #
 - **Background** (Chrome service worker / Firefox event page) observes requests with `webRequest` (observation only; pages can't hide from it). It classifies third parties with the bundled tracker database and labels each event by phase: *before any choice*, *after you rejected*, *after you accepted*, *no banner*.
 - **Page probe** (main world, `document_start`) reads consent platforms' public APIs and notes calls to fingerprinting-prone APIs. It never changes page behavior.
 - **Rules engine** (pure TypeScript, unit-tested) turns events + consent receipts into findings with severity and confidence.
-- **Enforce** uses `declarativeNetRequest` rules scoped to that site.
+- **Enforce** uses `declarativeNetRequest` rules scoped to that site. It blocks only those companies' tracking domains, never sign-in/CAPTCHA hosts or sites you visit directly, so it won't log you out of Google or Microsoft.
 
 Design spec and plan: [`docs/superpowers/`](docs/superpowers/). Contributor/agent guide: [AGENTS.md](AGENTS.md).
 
 ## Privacy
-Everything stays on your device. URL parameter values are replaced with salted hashes before storage. See [PRIVACY.md](PRIVACY.md).
+Everything stays on your device. URL parameter values and ID-like path segments are replaced with keyed hashes (HMAC-SHA-256, per-install key) before storage. See [PRIVACY.md](PRIVACY.md). To report a vulnerability, see [SECURITY.md](SECURITY.md).
 
 ## Roadmap
 - v1.1: auto-reject banners (via `@duckduckgo/autoconsent`), Firefox CNAME uncloaking.

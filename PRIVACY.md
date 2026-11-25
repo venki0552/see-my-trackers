@@ -5,7 +5,7 @@ _Last updated: 24 November 2026_
 **Short version:** See My Trackers collects nothing about you and sends nothing anywhere. Everything it records stays on your device.
 
 ## What the extension processes, on your device only
-- **Web requests your browser makes** (address, type, time) so it can tell you which companies a page contacted. Before anything is saved, the value of every URL parameter is replaced with a salted hash. The salt is random per install and never leaves your device.
+- **Web requests your browser makes** (address, type, time) so it can tell you which companies a page contacted. Before anything is saved, the value of every URL parameter (and any part of the address that looks like an ID or an email address) is replaced with a keyed hash (HMAC-SHA-256). The key is random per install and never leaves your device, so the same ID can't be matched across two people's reports.
 - **Cookie names** (not values) that tracking companies set or read.
 - **Consent banner state** (for example "rejected via OneTrust at 10:42") read from the banner's public JavaScript API, or your own "I rejected/I accepted" mark.
 - **Names of browser features** called by third-party scripts that are commonly used for fingerprinting (for example "canvas.toDataURL").

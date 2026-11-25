@@ -34,14 +34,17 @@ npm run package        # release zips
 
 ## Invariants (don't break these)
 1. **No network requests by the extension.** No fetch/XHR to any server, no remote config, no telemetry, no remote code (store policy + privacy promise).
-2. **Never store raw identifiers.** URL parameter values go through `redactUrl` / `hashValue` (salted, per install) before storage or export. The e2e tests assert that the raw fixture ID never appears in an export.
+2. **Never store raw identifiers.** URL parameter values, and path segments that look like IDs or personal data (emails, long tokens), go through `redactUrl` / `hashValue` (HMAC-SHA-256 keyed with a random per-install salt, truncated to 64 bits) before storage or export. The e2e tests assert that the raw fixture ID never appears in an export. Exports carry only a coarse browser name, never the full user agent.
 3. **Page strings are hostile.** In the UI, use `h()` / `textContent`, never `innerHTML`. `report-html.ts` escapes every value with `esc()`.
 4. **The probe must never break pages.** Everything is wrapped in try/catch, hooks are observe-only (Proxy + `Reflect.apply`), and there's no spoofing.
 5. **Register MV3 listeners synchronously at top level** in `background.ts`. The service worker can restart at any time, so rebuild state from `storage.session` / IndexedDB.
 6. **One codebase for all browsers.** Use the `api` handle from `src/shared/api.ts`. Feature-detect (e.g. the `extraHeaders` fallback); don't branch on user agent beyond `IS_FIREFOX`.
 7. **Wording is observational.** Say "contacted", "observed", "may indicate"; never "illegal". US/GPP receipts say "opted out of sale/sharing", not "rejected".
 8. **Test-only code** stays behind `__TEST__` / `__BRIDGE_READONLY__`. Release builds must not contain the test bridge (check: `grep -c testResult dist/chrome/relay.js` → 0).
-9. **Licenses.** Code is GPL-3.0-or-later. `data/trackers.json` is CC BY-NC-SA 4.0 (Ghostery TrackerDB): keep the attribution and don't make it commercial. Check any new data source's license before bundling it.
+9. **Page-world messages are untrusted.** The MAIN-world probe can be imitated by any page script. Consent messages only describe the site's own choice; fingerprinting reports are accepted only for script hosts the background actually saw load on that tab (`scriptHosts`). Per-page events are capped (`MAX_EVENTS_PER_PAGE`).
+10. **Enforce must not break sign-in.** It blocks only tracking-category domains (`trackingDomainsOfOrg`), never a site the user visits directly, never auth/CAPTCHA hosts (`AUTH_AND_CAPTCHA_HOSTS`, reCAPTCHA paths allowed), and deletes cookies only for tracker hosts seen on that site.
+11. **Supply chain.** GitHub Actions are pinned to commit SHAs. Never interpolate `${{ github.event.* }}` into `run:`; pass it through `env:`. Build scripts use `execFileSync` with argument arrays, not shell strings.
+12. **Licenses.** Code is GPL-3.0-or-later. `data/trackers.json` is CC BY-NC-SA 4.0 (Ghostery TrackerDB): keep the attribution and don't make it commercial. Check any new data source's license before bundling it.
 
 ## Adding a consent platform
 1. Add a raw payload variant + normalizer in `src/core/consent.ts`, with unit tests for reject / accept / partial / pending.

@@ -51,11 +51,13 @@ interface TabState {
   afterReject: Set<string>;
   preChoice: Set<string>;
   orgHosts: Map<string, { info: TrackerInfo | null; host: string }>;
+  scriptHosts: Set<string>;
+  stored: number;
 }
 const tabs = new Map<number, TabState>();
 
 function newTabState(url: string, ts: number): TabState {
-  return { site: siteOf(url), url, startedAt: ts, cmpDetected: false, cmpNames: [], idsync: new IdSyncTracker(), afterReject: new Set(), preChoice: new Set(), orgHosts: new Map() };
+  return { site: siteOf(url), url, startedAt: ts, cmpDetected: false, cmpNames: [], idsync: new IdSyncTracker(), afterReject: new Set(), preChoice: new Set(), orgHosts: new Map(), scriptHosts: new Set(), stored: 0 };
 }
 
 async function persistTab(tabId: number): Promise<void> {
@@ -115,8 +117,11 @@ function makeEvent(t: TabState, tabId: number, host: string, info: TrackerInfo |
   };
 }
 
+/** Per-page storage cap: a hostile page can fire unlimited requests; never let it flood IndexedDB. */
+const MAX_EVENTS_PER_PAGE = 5000;
+
 function record(t: TabState, tabId: number, e: TrackerEvent): void {
-  store.addEvent(e);
+  if (t.stored < MAX_EVENTS_PER_PAGE) { t.stored++; store.addEvent(e); }
   if (e.tier === 'tracking' && e.kind !== 'blocked' && e.kind !== 'idsync') {
     const k = e.orgId ?? e.hostSite;
     const before = t.afterReject.size + t.preChoice.size * 1000;
@@ -149,6 +154,7 @@ async function onBeforeRequest(d: ReqDetails): Promise<void> {
   const host = hostOf(d.url);
   if (!isThirdParty(host, t.site, idx.ownerOf)) return;
   if (await isPaused(t.site)) return;
+  if (d.type === 'script' && t.scriptHosts.size < 500) t.scriptHosts.add(host);
   const s = await getSettings();
   const info = idx.lookup(host);
   const hasBody = !!(d.requestBody && (d.requestBody.raw?.length || d.requestBody.formData));
@@ -319,6 +325,9 @@ async function handlePage(msg: PageMsg, sender: chrome.runtime.MessageSender): P
     const scriptUrl = msg.payload.scriptUrl;
     const host = scriptUrl && isWebUrl(scriptUrl) ? hostOf(scriptUrl) : '';
     if (!host || !isThirdParty(host, t.site, idx.ownerOf)) return; // only third-party scripts
+    // The page probe runs in the page's world, so a hostile page could forge a report blaming
+    // another company. Only accept attributions to script hosts this tab really loaded.
+    if (!t.scriptHosts.has(host)) return;
     const info = idx.lookup(host);
     record(t, tabId, makeEvent(t, tabId, host, info, { kind: 'fingerprint', detail: { api: String(msg.payload.api).slice(0, 60) } }, now));
   }
@@ -417,12 +426,20 @@ async function listSites() {
     .sort((a, b) => b.lastTs - a.lastTs);
 }
 
+/** Browser name + major version only: a full user-agent string in a shared report is itself identifying. */
+function coarseBrowser(): string {
+  const ua = navigator.userAgent;
+  const m = ua.match(/(Firefox|Edg|Chrome)\/(\d+)/);
+  if (!m) return 'unknown';
+  return `${m[1] === 'Edg' ? 'Edge' : m[1]} ${m[2]}`;
+}
+
 async function exportSite(site: string) {
   const rep = await siteReport(site);
   const events = await store.eventsForSite(site);
   const json = {
     tool: 'See My Trackers', version: VERSION, trackerDb: `Ghostery TrackerDB ${idx.version} (CC BY-NC-SA 4.0)`,
-    exportedAt: new Date().toISOString(), browser: navigator.userAgent,
+    exportedAt: new Date().toISOString(), browser: coarseBrowser(),
     note: 'Parameter values in URLs are replaced by salted hashes (#...) so no personal data is exported. Observations only; not legal advice.',
     report: rep,
     events: events.map(({ tabId: _t, ...e }) => ({ ...e, time: new Date(e.ts).toISOString() })),
@@ -448,16 +465,25 @@ async function applyGpc(on: boolean): Promise<void> {
   } catch (err) { console.warn('[smt] GPC JS signal unavailable in this browser', err); }
 }
 
+/** Sign-in and anti-bot hosts that share an apex domain with ad products: never blocked by Enforce. */
+const AUTH_AND_CAPTCHA_HOSTS = [
+  'accounts.google.com', 'recaptcha.net', 'www.recaptcha.net', 'appleid.apple.com',
+  'login.microsoftonline.com', 'login.live.com', 'challenges.cloudflare.com',
+];
+/** reCAPTCHA is served from www.google.com/recaptcha/: allow just that path, at higher priority. */
+const ALLOW_PATHS = ['||www.google.com/recaptcha/', '||www.gstatic.com/recaptcha/'];
+const ALLOW_RULE_OFFSET = 1_000_000;
+
 function ruleIdForSite(site: string): number {
   let h = 0;
   for (let i = 0; i < site.length; i++) h = (Math.imul(h, 31) + site.charCodeAt(i)) >>> 0;
   return 1000 + (h % 1_000_000);
 }
 
-async function applyEnforce(site: string, on: boolean): Promise<{ blockedDomains: number }> {
+async function applyEnforce(site: string, on: boolean): Promise<{ blockedDomains: number; cookiesDeleted?: number }> {
   const id = ruleIdForSite(site);
   if (!on) {
-    await api.declarativeNetRequest.updateDynamicRules({ removeRuleIds: [id] });
+    await api.declarativeNetRequest.updateDynamicRules({ removeRuleIds: [id, ...ALLOW_PATHS.map((_, i) => id + ALLOW_RULE_OFFSET * (i + 1))] });
     return { blockedDomains: 0 };
   }
   const aggs = await store.aggregatesForSite(site);
@@ -467,25 +493,37 @@ async function applyEnforce(site: string, on: boolean): Promise<{ blockedDomains
     if (a.tier !== 'tracking') continue;
     if (a.orgKey.startsWith('host:')) { domains.add(a.orgKey.slice(5)); continue; }
     if (a.orgKey.startsWith('owner:') || a.orgKey === siteOwner) continue;
-    for (const d of idx.domainsOfOrg(a.orgKey)) domains.add(d);
+    for (const d of idx.trackingDomainsOfOrg(a.orgKey)) domains.add(d);
   }
   domains.delete(site);
+  // Never block or wipe a domain the user visits directly (e.g. google.com): it would break
+  // sign-in widgets and log the user out everywhere.
+  const visited = new Set((await store.allAggregates()).map((a) => a.site));
+  for (const r of await store.allReceiptSites()) visited.add(r.site);
+  for (const v of visited) domains.delete(v);
   const list = [...domains].slice(0, 4000);
   await api.declarativeNetRequest.updateDynamicRules({
-    removeRuleIds: [id],
-    addRules: list.length ? [{ id, priority: 2, action: { type: 'block' as any }, condition: { requestDomains: list, initiatorDomains: [site], excludedResourceTypes: ['main_frame'] as any } }] : [],
+    removeRuleIds: [id, ...ALLOW_PATHS.map((_, i) => id + ALLOW_RULE_OFFSET * (i + 1))],
+    addRules: list.length ? [{ id, priority: 2, action: { type: 'block' as any }, condition: {
+      requestDomains: list, initiatorDomains: [site], excludedResourceTypes: ['main_frame'] as any,
+      excludedRequestDomains: AUTH_AND_CAPTCHA_HOSTS,
+    } }, ...ALLOW_PATHS.map((urlFilter, i) => ({ id: id + ALLOW_RULE_OFFSET * (i + 1), priority: 3,
+      action: { type: 'allow' as any }, condition: { urlFilter, initiatorDomains: [site] } }))] : [],
   });
-  // Delete existing cookies of those companies (non-partitioned + partitioned where supported).
-  for (const d of list.slice(0, 300)) {
+  // Delete cookies only for tracker domains actually seen on this site.
+  const seen = new Set((await store.eventsForSite(site)).filter((e) => e.tier === 'tracking').map((e) => e.hostSite));
+  let deleted = 0;
+  for (const d of [...seen].filter((x) => domains.has(x)).slice(0, 200)) {
     try {
       const cookies = await api.cookies.getAll({ domain: d });
       for (const c of cookies) {
         const url = `http${c.secure ? 's' : ''}://${c.domain.replace(/^\./, '')}${c.path}`;
         await api.cookies.remove({ url, name: c.name, storeId: c.storeId, ...(c.partitionKey ? { partitionKey: c.partitionKey } : {}) } as any);
+        deleted++;
       }
     } catch { /* ignore */ }
   }
-  return { blockedDomains: list.length };
+  return { blockedDomains: list.length, cookiesDeleted: deleted };
 }
 
 // ---------------- UI RPC ----------------

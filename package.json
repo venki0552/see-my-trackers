@@ -1,6 +1,6 @@
 {
   "name": "see-my-trackers",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "description": "See which companies your browser talks to after you reject cookies.",
   "license": "GPL-3.0-or-later",

@@ -214,3 +214,26 @@ test('buildReport counts after-reject orgs and ignores blocked-only orgs', () =>
   assert.equal(rep.receipt?.choice, 'rejected');
   assert.deepEqual(rep.findings.map((f) => f.rule), ['R1']);
 });
+
+import { createHmac, createHash } from 'node:crypto';
+import { sha256, hmacSha256, toHex } from '../../src/core/hmac';
+import { looksPersonal } from '../../src/core/redact';
+
+test('sha256 + hmacSha256 match node:crypto (incl. multi-block and long keys)', () => {
+  for (const msg of ['', 'abc', 'a'.repeat(55), 'a'.repeat(56), 'a'.repeat(64), 'x'.repeat(1000), 'ünïcödé ✓']) {
+    assert.equal(toHex(sha256(new TextEncoder().encode(msg))), createHash('sha256').update(msg).digest('hex'));
+    for (const key of ['k', 'salt-0123456789abcdef', 'K'.repeat(100)]) {
+      assert.equal(toHex(hmacSha256(key, msg)), createHmac('sha256', key).update(msg).digest('hex'));
+    }
+  }
+  assert.equal(hashValue('v', 's'), createHmac('sha256', 's').update('v').digest('hex').slice(0, 16));
+});
+
+test('redactUrl hashes personal path segments (emails, long tokens)', () => {
+  const r = redactUrl('https://t.example.com/u/jane.doe@example.com/track/aGVsbG8gd29ybGQgdGhpcyBpcyBhIGxvbmcgdG9rZW4=', 's');
+  assert.ok(!r.includes('jane.doe'), r);
+  assert.ok(!r.includes('aGVsbG8'), r);
+  assert.ok(r.includes('/u/#') && r.includes('/track/#'), r);
+  assert.equal(looksPersonal('jane%40example.com'), true);
+  assert.equal(looksPersonal('collect'), false);
+});

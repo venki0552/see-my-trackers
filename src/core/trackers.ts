@@ -74,6 +74,16 @@ export class TrackerIndex {
     return o ? { country: o[1], privacyContact: o[2], privacyPolicy: o[3] } : null;
   };
 
+  /** Domains of an organization's *tracking-category* products only (Enforce blocks these, not its CDNs/logins). */
+  trackingDomainsOfOrg(orgId: string): string[] {
+    const pids = new Set(
+      Object.entries(this.data.patterns)
+        .filter(([, p]) => p[2] === orgId && TRACKING_CATEGORIES.has(p[1]))
+        .map(([pid]) => pid),
+    );
+    return Object.entries(this.data.domains).filter(([, pid]) => pids.has(pid)).map(([d]) => d);
+  }
+
   /** All domains belonging to an organization (for Enforce mode rules). */
   domainsOfOrg(orgId: string): string[] {
     const pids = new Set(
