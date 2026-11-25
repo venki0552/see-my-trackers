@@ -1,0 +1,823 @@
+{
+  "when": "2026-11-25T00:42:04.172Z",
+  "browser": "Chrome/153.0.8010.12",
+  "results": [
+    {
+      "site": "theguardian.com",
+      "ok": true,
+      "rejectMethod": "selector:button.sp_choice_type_13",
+      "url": "https://www.theguardian.com/us",
+      "cmp": [
+        "gpp"
+      ],
+      "receipt": "rejected (gpp)",
+      "counts": {
+        "afterRejectTrackingOrgs": 2,
+        "preChoiceTrackingOrgs": 9,
+        "trackingOrgs": 9,
+        "thirdPartyOrgs": 14
+      },
+      "findings": [
+        "R1",
+        "R6",
+        "R9"
+      ],
+      "afterRejectOrgs": [
+        "Google",
+        "Yahoo"
+      ],
+      "verifiedAfterReject": 2,
+      "preChoiceOrgs": [
+        "Criteo",
+        "Google",
+        "ID5 Technology",
+        "Intimate Merger",
+        "Lotame",
+        "OpenX Software Ltd.",
+        "PubMatic, Inc.",
+        "RTB House",
+        "Yahoo"
+      ],
+      "trackingOrgs": [
+        "Criteo",
+        "Google",
+        "ID5 Technology",
+        "Intimate Merger",
+        "Lotame",
+        "OpenX Software Ltd.",
+        "PubMatic, Inc.",
+        "RTB House",
+        "Yahoo"
+      ],
+      "gcmDenied": false,
+      "requestsSeenByPuppeteer": 192
+    },
+    {
+      "site": "bbc.com",
+      "ok": true,
+      "rejectMethod": null,
+      "rejectMethod2": null,
+      "url": "https://www.bbc.com/",
+      "cmp": [
+        "tcf",
+        "gpp",
+        "gcm"
+      ],
+      "receipt": null,
+      "counts": {
+        "afterRejectTrackingOrgs": 0,
+        "preChoiceTrackingOrgs": 10,
+        "trackingOrgs": 10,
+        "thirdPartyOrgs": 18
+      },
+      "findings": [
+        "R6",
+        "R9"
+      ],
+      "afterRejectOrgs": [],
+      "verifiedAfterReject": 0,
+      "preChoiceOrgs": [
+        "ChartBeat",
+        "comScore, Inc.",
+        "Cxense",
+        "DoubleVerify",
+        "Google",
+        "mParticle",
+        "Nielsen",
+        "Permutive",
+        "Piano Software",
+        "SpeedCurve"
+      ],
+      "trackingOrgs": [
+        "ChartBeat",
+        "comScore, Inc.",
+        "Cxense",
+        "DoubleVerify",
+        "Google",
+        "mParticle",
+        "Nielsen",
+        "Permutive",
+        "Piano Software",
+        "SpeedCurve"
+      ],
+      "gcmDenied": false,
+      "requestsSeenByPuppeteer": 272
+    },
+    {
+      "site": "reuters.com",
+      "ok": true,
+      "rejectMethod": null,
+      "rejectMethod2": null,
+      "url": "https://www.reuters.com/",
+      "cmp": [],
+      "receipt": null,
+      "counts": {
+        "afterRejectTrackingOrgs": 0,
+        "preChoiceTrackingOrgs": 0,
+        "trackingOrgs": 0,
+        "thirdPartyOrgs": 1
+      },
+      "findings": [],
+      "afterRejectOrgs": [],
+      "verifiedAfterReject": 0,
+      "preChoiceOrgs": [],
+      "trackingOrgs": [],
+      "gcmDenied": false,
+      "requestsSeenByPuppeteer": 21
+    },
+    {
+      "site": "spiegel.de",
+      "ok": true,
+      "rejectMethod": null,
+      "rejectMethod2": null,
+      "url": "https://www.spiegel.de/",
+      "cmp": [
+        "tcf"
+      ],
+      "receipt": null,
+      "counts": {
+        "afterRejectTrackingOrgs": 0,
+        "preChoiceTrackingOrgs": 1,
+        "trackingOrgs": 1,
+        "thirdPartyOrgs": 3
+      },
+      "findings": [
+        "R9"
+      ],
+      "afterRejectOrgs": [],
+      "verifiedAfterReject": 0,
+      "preChoiceOrgs": [
+        "tisoomi"
+      ],
+      "trackingOrgs": [
+        "tisoomi"
+      ],
+      "gcmDenied": false,
+      "requestsSeenByPuppeteer": 85
+    },
+    {
+      "site": "lemonde.fr",
+      "ok": true,
+      "rejectMethod": null,
+      "rejectMethod2": null,
+      "url": "https://www.lemonde.fr/en/",
+      "cmp": [
+        "tcf"
+      ],
+      "receipt": null,
+      "counts": {
+        "afterRejectTrackingOrgs": 0,
+        "preChoiceTrackingOrgs": 2,
+        "trackingOrgs": 2,
+        "thirdPartyOrgs": 4
+      },
+      "findings": [],
+      "afterRejectOrgs": [],
+      "verifiedAfterReject": 0,
+      "preChoiceOrgs": [
+        "Amplitude",
+        "Magnite"
+      ],
+      "trackingOrgs": [
+        "Amplitude",
+        "Magnite"
+      ],
+      "gcmDenied": false,
+      "requestsSeenByPuppeteer": 59
+    },
+    {
+      "site": "cnn.com",
+      "ok": true,
+      "rejectMethod": null,
+      "rejectMethod2": null,
+      "url": "https://www.cnn.com/",
+      "cmp": [
+        "gpp",
+        "onetrust"
+      ],
+      "receipt": "rejected (gpp)",
+      "counts": {
+        "afterRejectTrackingOrgs": 1,
+        "preChoiceTrackingOrgs": 0,
+        "trackingOrgs": 1,
+        "thirdPartyOrgs": 9
+      },
+      "findings": [
+        "R1",
+        "R4",
+        "R5"
+      ],
+      "afterRejectOrgs": [
+        "Google"
+      ],
+      "verifiedAfterReject": 1,
+      "preChoiceOrgs": [],
+      "trackingOrgs": [
+        "Google"
+      ],
+      "gcmDenied": false,
+      "requestsSeenByPuppeteer": 133
+    },
+    {
+      "site": "forbes.com",
+      "ok": true,
+      "rejectMethod": null,
+      "rejectMethod2": null,
+      "url": "https://www.forbes.com/",
+      "cmp": [],
+      "receipt": null,
+      "counts": {
+        "afterRejectTrackingOrgs": 0,
+        "preChoiceTrackingOrgs": 0,
+        "trackingOrgs": 0,
+        "thirdPartyOrgs": 1
+      },
+      "findings": [],
+      "afterRejectOrgs": [],
+      "verifiedAfterReject": 0,
+      "preChoiceOrgs": [],
+      "trackingOrgs": [],
+      "gcmDenied": false,
+      "requestsSeenByPuppeteer": 12
+    },
+    {
+      "site": "independent.co.uk",
+      "ok": true,
+      "rejectMethod": null,
+      "rejectMethod2": null,
+      "url": "https://www.independent.co.uk/us?CMP=ILC-refresh",
+      "cmp": [
+        "tcf",
+        "gpp",
+        "gcm"
+      ],
+      "receipt": null,
+      "counts": {
+        "afterRejectTrackingOrgs": 0,
+        "preChoiceTrackingOrgs": 54,
+        "trackingOrgs": 54,
+        "thirdPartyOrgs": 67
+      },
+      "findings": [
+        "R6",
+        "R9"
+      ],
+      "afterRejectOrgs": [],
+      "verifiedAfterReject": 0,
+      "preChoiceOrgs": [
+        "Adform",
+        "Adobe",
+        "AlmondNet",
+        "Amazon",
+        "Anonymised",
+        "Beeswax",
+        "Blis",
+        "Bombora",
+        "Captify",
+        "ChartBeat",
+        "Cloudflare",
+        "comScore, Inc.",
+        "Conversant",
+        "Crazy Egg",
+        "Criteo",
+        "DoubleVerify",
+        "Epsilon",
+        "Equativ",
+        "Experian",
+        "Eyeota",
+        "Google",
+        "GumGum",
+        "ID5 Technology",
+        "Improve Digital",
+        "Index Exchange, Inc.",
+        "Kargo",
+        "LiveIntent",
+        "LiveRamp",
+        "Lotame",
+        "Magnite",
+        "Microsoft",
+        "Monet Engine",
+        "Nativo",
+        "Nexx360",
+        "Nielsen",
+        "Ogury",
+        "OneTag",
+        "OpenX Software Ltd.",
+        "Ozone",
+        "Permutive",
+        "PubMatic, Inc.",
+        "pubstack",
+        "RTB House",
+        "Seedtag Advertising",
+        "Sovrn Holdings Inc",
+        "StackAdapt",
+        "syncingbridge.com",
+        "Taboola",
+        "The Trade Desk",
+        "TripleLift, Inc.",
+        "Viant",
+        "Wunderkind",
+        "Yahoo",
+        "Yieldmo, Inc."
+      ],
+      "trackingOrgs": [
+        "Adform",
+        "Adobe",
+        "AlmondNet",
+        "Amazon",
+        "Anonymised",
+        "Beeswax",
+        "Blis",
+        "Bombora",
+        "Captify",
+        "ChartBeat",
+        "Cloudflare",
+        "comScore, Inc.",
+        "Conversant",
+        "Crazy Egg",
+        "Criteo",
+        "DoubleVerify",
+        "Epsilon",
+        "Equativ",
+        "Experian",
+        "Eyeota",
+        "Google",
+        "GumGum",
+        "ID5 Technology",
+        "Improve Digital",
+        "Index Exchange, Inc.",
+        "Kargo",
+        "LiveIntent",
+        "LiveRamp",
+        "Lotame",
+        "Magnite",
+        "Microsoft",
+        "Monet Engine",
+        "Nativo",
+        "Nexx360",
+        "Nielsen",
+        "Ogury",
+        "OneTag",
+        "OpenX Software Ltd.",
+        "Ozone",
+        "Permutive",
+        "PubMatic, Inc.",
+        "pubstack",
+        "RTB House",
+        "Seedtag Advertising",
+        "Sovrn Holdings Inc",
+        "StackAdapt",
+        "syncingbridge.com",
+        "Taboola",
+        "The Trade Desk",
+        "TripleLift, Inc.",
+        "Viant",
+        "Wunderkind",
+        "Yahoo",
+        "Yieldmo, Inc."
+      ],
+      "gcmDenied": false,
+      "requestsSeenByPuppeteer": 2966
+    },
+    {
+      "site": "dailymail.co.uk",
+      "ok": false,
+      "rejectMethod": null,
+      "rejectMethod2": null,
+      "error": "Error: no report"
+    },
+    {
+      "site": "weather.com",
+      "ok": true,
+      "rejectMethod": null,
+      "rejectMethod2": null,
+      "url": "https://weather.com/",
+      "cmp": [],
+      "receipt": null,
+      "counts": {
+        "afterRejectTrackingOrgs": 0,
+        "preChoiceTrackingOrgs": 0,
+        "trackingOrgs": 10,
+        "thirdPartyOrgs": 21
+      },
+      "findings": [
+        "R6"
+      ],
+      "afterRejectOrgs": [],
+      "verifiedAfterReject": 0,
+      "preChoiceOrgs": [],
+      "trackingOrgs": [
+        "Amazon",
+        "Amplitude",
+        "AppsFlyer",
+        "Assertive Yield",
+        "DoubleVerify",
+        "Google",
+        "Integral Ad Science",
+        "Magnite",
+        "New Relic",
+        "Optable Technologies"
+      ],
+      "gcmDenied": false,
+      "requestsSeenByPuppeteer": 431
+    },
+    {
+      "site": "elpais.com",
+      "ok": true,
+      "rejectMethod": null,
+      "rejectMethod2": null,
+      "url": "https://elpais.com/",
+      "cmp": [],
+      "receipt": null,
+      "counts": {
+        "afterRejectTrackingOrgs": 0,
+        "preChoiceTrackingOrgs": 0,
+        "trackingOrgs": 6,
+        "thirdPartyOrgs": 8
+      },
+      "findings": [],
+      "afterRejectOrgs": [],
+      "verifiedAfterReject": 0,
+      "preChoiceOrgs": [],
+      "trackingOrgs": [
+        "Adobe",
+        "AdsWizz",
+        "Google",
+        "Microsoft",
+        "PubMatic, Inc.",
+        "The Trade Desk"
+      ],
+      "gcmDenied": false,
+      "requestsSeenByPuppeteer": 30
+    },
+    {
+      "site": "corriere.it",
+      "ok": true,
+      "rejectMethod": null,
+      "rejectMethod2": null,
+      "url": "https://www.corriere.it/",
+      "cmp": [
+        "tcf"
+      ],
+      "receipt": null,
+      "counts": {
+        "afterRejectTrackingOrgs": 0,
+        "preChoiceTrackingOrgs": 12,
+        "trackingOrgs": 12,
+        "thirdPartyOrgs": 21
+      },
+      "findings": [
+        "R6",
+        "R9"
+      ],
+      "afterRejectOrgs": [],
+      "verifiedAfterReject": 0,
+      "preChoiceOrgs": [
+        "Adobe",
+        "Anonymised",
+        "AppsFlyer",
+        "ChartBeat",
+        "Cxense",
+        "Google",
+        "Marfeel Solutions",
+        "Nielsen",
+        "Permutive",
+        "Piano Software",
+        "RCS MediaGroup S.p.A. \u0003",
+        "Taboola"
+      ],
+      "trackingOrgs": [
+        "Adobe",
+        "Anonymised",
+        "AppsFlyer",
+        "ChartBeat",
+        "Cxense",
+        "Google",
+        "Marfeel Solutions",
+        "Nielsen",
+        "Permutive",
+        "Piano Software",
+        "RCS MediaGroup S.p.A. \u0003",
+        "Taboola"
+      ],
+      "gcmDenied": false,
+      "requestsSeenByPuppeteer": 378
+    },
+    {
+      "site": "imdb.com",
+      "ok": true,
+      "rejectMethod": null,
+      "rejectMethod2": null,
+      "url": "https://www.imdb.com/",
+      "cmp": [],
+      "receipt": null,
+      "counts": {
+        "afterRejectTrackingOrgs": 0,
+        "preChoiceTrackingOrgs": 0,
+        "trackingOrgs": 0,
+        "thirdPartyOrgs": 1
+      },
+      "findings": [],
+      "afterRejectOrgs": [],
+      "verifiedAfterReject": 0,
+      "preChoiceOrgs": [],
+      "trackingOrgs": [],
+      "gcmDenied": false,
+      "requestsSeenByPuppeteer": 19
+    },
+    {
+      "site": "booking.com",
+      "ok": true,
+      "rejectMethod": null,
+      "rejectMethod2": null,
+      "url": "https://www.booking.com/?chal_t=1795567258990&force_referer=",
+      "cmp": [
+        "onetrust"
+      ],
+      "receipt": null,
+      "counts": {
+        "afterRejectTrackingOrgs": 0,
+        "preChoiceTrackingOrgs": 1,
+        "trackingOrgs": 1,
+        "thirdPartyOrgs": 3
+      },
+      "findings": [],
+      "afterRejectOrgs": [],
+      "verifiedAfterReject": 0,
+      "preChoiceOrgs": [
+        "Google"
+      ],
+      "trackingOrgs": [
+        "Google"
+      ],
+      "gcmDenied": false,
+      "requestsSeenByPuppeteer": 241
+    },
+    {
+      "site": "stackoverflow.com",
+      "ok": true,
+      "rejectMethod": "selector:#onetrust-reject-all-handler",
+      "url": "https://stackoverflow.com/questions",
+      "cmp": [
+        "gpp",
+        "gcm",
+        "onetrust"
+      ],
+      "receipt": "rejected (onetrust)",
+      "counts": {
+        "afterRejectTrackingOrgs": 13,
+        "preChoiceTrackingOrgs": 4,
+        "trackingOrgs": 16,
+        "thirdPartyOrgs": 22
+      },
+      "findings": [
+        "R1",
+        "R10",
+        "R2",
+        "R3",
+        "R4",
+        "R5",
+        "R6",
+        "R9"
+      ],
+      "afterRejectOrgs": [
+        "Conversant",
+        "Criteo",
+        "Equativ",
+        "Google",
+        "Index Exchange, Inc.",
+        "Kargo",
+        "Magnite",
+        "Media.net",
+        "Microsoft",
+        "OpenX Software Ltd.",
+        "PubMatic, Inc.",
+        "The Trade Desk",
+        "TripleLift, Inc."
+      ],
+      "verifiedAfterReject": 12,
+      "preChoiceOrgs": [
+        "Aditude",
+        "Automattic",
+        "Google",
+        "Meta"
+      ],
+      "trackingOrgs": [
+        "Aditude",
+        "Automattic",
+        "Conversant",
+        "Criteo",
+        "Equativ",
+        "Google",
+        "Index Exchange, Inc.",
+        "Kargo",
+        "Magnite",
+        "Media.net",
+        "Meta",
+        "Microsoft",
+        "OpenX Software Ltd.",
+        "PubMatic, Inc.",
+        "The Trade Desk",
+        "TripleLift, Inc."
+      ],
+      "gcmDenied": true,
+      "requestsSeenByPuppeteer": 215
+    },
+    {
+      "site": "nytimes.com",
+      "ok": true,
+      "rejectMethod": null,
+      "rejectMethod2": null,
+      "url": "https://www.nytimes.com/",
+      "cmp": [
+        "gpp"
+      ],
+      "receipt": "rejected (gpp)",
+      "counts": {
+        "afterRejectTrackingOrgs": 35,
+        "preChoiceTrackingOrgs": 12,
+        "trackingOrgs": 37,
+        "thirdPartyOrgs": 46
+      },
+      "findings": [
+        "R1",
+        "R2",
+        "R3",
+        "R4",
+        "R5",
+        "R6",
+        "R9"
+      ],
+      "afterRejectOrgs": [
+        "AlmondNet",
+        "Amazon",
+        "Aniview",
+        "Beeswax",
+        "Centro",
+        "ChartBeat",
+        "Connatix Native Exchange",
+        "Conversant",
+        "Criteo",
+        "Deep Intent",
+        "DoubleVerify",
+        "Google",
+        "Index Exchange, Inc.",
+        "InMobi",
+        "Kargo",
+        "LiveRamp",
+        "Magnite",
+        "Media.net",
+        "mfadsrvr.com",
+        "Microsoft",
+        "Monet Engine",
+        "Nexxen",
+        "OpenX Software Ltd.",
+        "Outbrain",
+        "PubMatic, Inc.",
+        "PulsePoint, Inc.",
+        "Roqad",
+        "RTB House",
+        "Seedtag Advertising",
+        "Sharethrough, Inc",
+        "Taboola",
+        "The Trade Desk",
+        "TripleLift, Inc.",
+        "Verve Group",
+        "Yahoo"
+      ],
+      "verifiedAfterReject": 34,
+      "preChoiceOrgs": [
+        "Amazon",
+        "Brand Metrics",
+        "ChartBeat",
+        "Criteo",
+        "Five Media",
+        "Google",
+        "Index Exchange, Inc.",
+        "Magnite",
+        "Media.net",
+        "OpenX Software Ltd.",
+        "PubMatic, Inc.",
+        "TripleLift, Inc."
+      ],
+      "trackingOrgs": [
+        "AlmondNet",
+        "Amazon",
+        "Aniview",
+        "Beeswax",
+        "Brand Metrics",
+        "Centro",
+        "ChartBeat",
+        "Connatix Native Exchange",
+        "Conversant",
+        "Criteo",
+        "Deep Intent",
+        "DoubleVerify",
+        "Five Media",
+        "Google",
+        "Index Exchange, Inc.",
+        "InMobi",
+        "Kargo",
+        "LiveRamp",
+        "Magnite",
+        "Media.net",
+        "mfadsrvr.com",
+        "Microsoft",
+        "Monet Engine",
+        "Nexxen",
+        "OpenX Software Ltd.",
+        "Outbrain",
+        "PubMatic, Inc.",
+        "PulsePoint, Inc.",
+        "Roqad",
+        "RTB House",
+        "Seedtag Advertising",
+        "Sharethrough, Inc",
+        "Taboola",
+        "The Trade Desk",
+        "TripleLift, Inc.",
+        "Verve Group",
+        "Yahoo"
+      ],
+      "gcmDenied": false,
+      "requestsSeenByPuppeteer": 714
+    }
+  ],
+  "topCompanies": [
+    {
+      "org": "Google",
+      "sites": 11,
+      "afterRejectSites": 5
+    },
+    {
+      "org": "Criteo",
+      "sites": 5,
+      "afterRejectSites": 4
+    },
+    {
+      "org": "PubMatic, Inc.",
+      "sites": 5,
+      "afterRejectSites": 3
+    },
+    {
+      "org": "Magnite",
+      "sites": 5,
+      "afterRejectSites": 2
+    },
+    {
+      "org": "OpenX Software Ltd.",
+      "sites": 5,
+      "afterRejectSites": 2
+    },
+    {
+      "org": "Microsoft",
+      "sites": 4,
+      "afterRejectSites": 2
+    },
+    {
+      "org": "RTB House",
+      "sites": 4,
+      "afterRejectSites": 2
+    },
+    {
+      "org": "The Trade Desk",
+      "sites": 4,
+      "afterRejectSites": 2
+    },
+    {
+      "org": "Conversant",
+      "sites": 3,
+      "afterRejectSites": 2
+    },
+    {
+      "org": "Index Exchange, Inc.",
+      "sites": 3,
+      "afterRejectSites": 2
+    },
+    {
+      "org": "Kargo",
+      "sites": 3,
+      "afterRejectSites": 2
+    },
+    {
+      "org": "Media.net",
+      "sites": 3,
+      "afterRejectSites": 2
+    },
+    {
+      "org": "TripleLift, Inc.",
+      "sites": 3,
+      "afterRejectSites": 2
+    },
+    {
+      "org": "Yahoo",
+      "sites": 3,
+      "afterRejectSites": 2
+    },
+    {
+      "org": "ChartBeat",
+      "sites": 4,
+      "afterRejectSites": 1
+    }
+  ]
+}

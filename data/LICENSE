@@ -1,0 +1,10 @@
+data/trackers.json is derived from the Ghostery Tracker Database
+(https://github.com/ghostery/trackerdb), (c) Ghostery GmbH.
+
+It is licensed under the Creative Commons Attribution-NonCommercial-ShareAlike 4.0
+International License (CC BY-NC-SA 4.0): https://creativecommons.org/licenses/by-nc-sa/4.0/
+
+Changes: fields reduced to domain -> pattern -> organization (name, category, country,
+privacy contact, privacy policy URL) and re-serialized as compact JSON.
+
+This derived data is shared under the same license. It may not be used for commercial purposes.

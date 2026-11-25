@@ -1,0 +1,30 @@
+{
+  "name": "see-my-trackers",
+  "version": "1.0.0",
+  "private": true,
+  "description": "See which companies your browser talks to after you reject cookies.",
+  "license": "GPL-3.0-or-later",
+  "type": "module",
+  "scripts": {
+    "data": "node scripts/build-data.mjs",
+    "build": "node scripts/build.mjs",
+    "test": "tsx --test tests/unit/*.test.ts",
+    "typecheck": "tsc --noEmit",
+    "package": "node scripts/package.mjs"
+  },
+  "dependencies": {
+    "@iabtechlabtcf/core": "^1.5.22",
+    "tldts": "^7.5.5"
+  },
+  "devDependencies": {
+    "@ghostery/trackerdb": "^1.0.975",
+    "@types/chrome": "^0.3.8",
+    "@types/node": "^26.6.7",
+    "esbuild": "^0.28.2",
+    "fake-indexeddb": "^6.2.8",
+    "puppeteer-core": "^25.18.1",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2",
+    "web-ext": "^10.8.0"
+  }
+}
